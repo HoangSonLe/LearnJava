@@ -1,0 +1,40 @@
+server:
+  port: 8080
+#  servlet:
+#    context-path: /learn 
+
+domain:
+  internal:
+    database:
+      reader: 10.0.0.27:5439
+      writer: 10.0.0.27:5438
+spring:
+  profiles:
+    active: local
+    include: actuator
+  application:
+    name: LearnJava
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: ttch_calendar
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+database:
+  writer:
+    url: jdbc:postgresql://${domain.internal.database.writer}/ttch?&connectTimeout=10&socketTimeout=10&tcpKeepAlive=true
+    username: ttch
+    password: X8!rT2#bL5&vN7$
+  reader:
+    url: jdbc:postgresql://${domain.internal.database.reader}/ttch?&connectTimeout=10&socketTimeout=10&tcpKeepAlive=true
+    username: ttch_dbr
+    password: X8!rT2#bL5&vN7$
+
+#logging:
+#  config: classpath:logback_config/logback.xml
+#  level:
+#    root: INFO
+#    org.springframework.*: INFO
+#    tech.outsource.*: DEBUG
+#    org.hibernate.orm.jdbc.bind: TRACE
