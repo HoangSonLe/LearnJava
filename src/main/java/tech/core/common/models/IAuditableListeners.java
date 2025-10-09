@@ -1,6 +1,6 @@
 package tech.core.common.models;
 
-public interface AuditableListeners {
+public interface IAuditableListeners {
     void beforeAnyUpdate(Auditable auditable);
 
     void afterAnyUpdate(Auditable auditable);

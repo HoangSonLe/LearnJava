@@ -63,7 +63,24 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
     }
 
-    @ExceptionHandler({HttpRequestMethodNotSupportedException.class, HttpMediaTypeNotSupportedException.class, HttpMediaTypeNotAcceptableException.class, MissingPathVariableException.class, MissingServletRequestParameterException.class, MissingServletRequestPartException.class, ServletRequestBindingException.class, MethodArgumentNotValidException.class, NoHandlerFoundException.class, AsyncRequestTimeoutException.class, ErrorResponseException.class, ConversionNotSupportedException.class, TypeMismatchException.class, HttpMessageNotReadableException.class, HttpMessageNotWritableException.class, BindException.class})
+    @ExceptionHandler({
+            HttpRequestMethodNotSupportedException.class,
+            HttpMediaTypeNotSupportedException.class,
+            HttpMediaTypeNotAcceptableException.class,
+            MissingPathVariableException.class,
+            MissingServletRequestParameterException.class,
+            MissingServletRequestPartException.class,
+            ServletRequestBindingException.class,
+            MethodArgumentNotValidException.class,
+            NoHandlerFoundException.class,
+            AsyncRequestTimeoutException.class,
+            ErrorResponseException.class,
+            ConversionNotSupportedException.class,
+            TypeMismatchException.class,
+            HttpMessageNotReadableException.class,
+            HttpMessageNotWritableException.class,
+            BindException.class
+    })
     public ResponseEntity<ApiErrorResponse> handleBindException(final BindException exception, final HttpServletRequest request) {
         FieldError fieldError = (FieldError) exception.getFieldErrors().stream().findFirst().orElse(new FieldError("", "", ""));
         ApiErrorResponse response = new ApiErrorResponse(this.requestUID(request).value(), CoreErrorCodes.BAD_REQUEST.getCode(), fieldError.getDefaultMessage(), request.getRequestURI(), request.getMethod(), LocalDateTime.now());

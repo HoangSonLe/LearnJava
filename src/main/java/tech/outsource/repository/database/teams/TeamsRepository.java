@@ -40,3 +40,4 @@ public interface TeamsRepository extends JpaRepository<TeamsEntity, Long> {
     boolean existsByTeamCodeAndStatusNot(String teamCode, String status);
 
 }
+

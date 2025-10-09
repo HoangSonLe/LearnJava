@@ -41,6 +41,7 @@ public class UserEntity extends Auditable implements Serializable {
     @Builder.Default
     @Column(nullable = false, name = "deleted")
     Boolean deleted = false;
-    @Column(name = "isExpiredPwd", nullable = false)
+    @Builder.Default
+    @Column(name = "is_expired_pwd", nullable = false)
     private Boolean isExpiredPwd = true;
 }

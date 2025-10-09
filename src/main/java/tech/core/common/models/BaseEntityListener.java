@@ -22,12 +22,13 @@ import java.util.Optional;
 public class BaseEntityListener {
 
     @Autowired(required = false)
-    AuditableListeners auditableListeners;
+    IAuditableListeners IAuditableListeners;
 
     private Optional<String> getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return Optional.of("0");
+        if (authentication == null || !authentication.isAuthenticated()
+                || "anonymousUser".equals(authentication.getPrincipal())) {
+            return Optional.of("0"); // userId mặc định khi chưa đăng nhập
         }
         return Optional.of(authentication.getName());
     }
@@ -49,8 +50,8 @@ public class BaseEntityListener {
             auditable.setCreatedProgram("System");
         }
 
-        if (auditableListeners != null) {
-            auditableListeners.beforeAnyUpdate(auditable);
+        if (IAuditableListeners != null) {
+            IAuditableListeners.beforeAnyUpdate(auditable);
         }
     }
 
@@ -64,15 +65,15 @@ public class BaseEntityListener {
         } else {
             auditable.setCreatedProgram("System");
         }
-        if (Objects.nonNull(this.auditableListeners)) {
-            this.auditableListeners.beforeAnyUpdate(auditable);
+        if (Objects.nonNull(this.IAuditableListeners)) {
+            this.IAuditableListeners.beforeAnyUpdate(auditable);
         }
     }
 
     @PreRemove
     private void beforeAnyRemove(Auditable auditable) {
-        if (Objects.nonNull(this.auditableListeners)) {
-            this.auditableListeners.beforeAnyUpdate(auditable);
+        if (Objects.nonNull(this.IAuditableListeners)) {
+            this.IAuditableListeners.beforeAnyUpdate(auditable);
         }
     }
 
@@ -80,15 +81,15 @@ public class BaseEntityListener {
     @PostUpdate
     @PostRemove
     private void afterAnyUpdate(Auditable auditable) {
-        if (Objects.nonNull(this.auditableListeners)) {
-            this.auditableListeners.afterAnyUpdate(auditable);
+        if (Objects.nonNull(this.IAuditableListeners)) {
+            this.IAuditableListeners.afterAnyUpdate(auditable);
         }
     }
 
     @PostLoad
     private void afterLoad(Auditable auditable) {
-        if (Objects.nonNull(this.auditableListeners)) {
-            this.auditableListeners.afterLoad(auditable);
+        if (Objects.nonNull(this.IAuditableListeners)) {
+            this.IAuditableListeners.afterLoad(auditable);
         }
     }
 }
