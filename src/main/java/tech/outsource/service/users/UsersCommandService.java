@@ -3,9 +3,8 @@ package tech.outsource.service.users;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.core.controller.exceptions.ApplicationException;
@@ -39,17 +38,34 @@ public class UsersCommandService {
     PasswordEncoder passwordEncoder;
 
     public User create(User user) {
-        if (userRepository.existsByUsernameAndEmail(user.username(), user.email())) {
+        if (userRepository.existsByUsername(user.username())) {
             throw new ApplicationException(
                     UserErrorCodes.DUPLICATE_DATA_ERROR,
-                    UserErrorCodes.DUPLICATE_DATA_ERROR.getMessage() + ":" + user.username() + ", " + user.email(),
+                    "Username already exists: " + user.username(),
                     HttpStatus.CONFLICT
             );
         }
 
+        if (userRepository.existsByEmail(user.email())) {
+            throw new ApplicationException(
+                    UserErrorCodes.DUPLICATE_DATA_ERROR,
+                    "Email already exists: " + user.email(),
+                    HttpStatus.CONFLICT
+            );
+        }
+
+
         UserEntity userEntity = userMapper.toEntity(user);
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        UserEntity savedEntity = userRepository.save(userEntity);
+        UserEntity savedEntity;
+        try {
+            savedEntity = userRepository.save(userEntity);
+        } catch (DataIntegrityViolationException e) {
+            // fallback trong trường hợp race condition
+            throw new ApplicationException(UserErrorCodes.DUPLICATE_DATA_ERROR,
+                    UserErrorCodes.DUPLICATE_DATA_ERROR.getMessage() + ":" + user.username() + ", " + user.email(),
+                    HttpStatus.CONFLICT);
+        }
         return userMapper.toDto(savedEntity);
     }
 
