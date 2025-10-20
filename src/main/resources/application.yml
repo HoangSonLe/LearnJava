@@ -76,8 +76,8 @@ jwt:
     iD3k85zUV+tHDVKu3nlp2g1yDH/C4DMcrNqMWZJBBeRdI4xsZL+cXOvcvljfaefU
     1wIDAQAB
     -----END PUBLIC KEY-----
-  jwtRefreshExpirationS: 60
-  jwtAccessTokenExpirationS: 30
+  jwtRefreshExpirationS: 600
+  jwtAccessTokenExpirationS: 300
   issuer: LearnJava
 
 aes:

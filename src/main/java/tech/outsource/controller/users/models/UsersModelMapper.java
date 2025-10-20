@@ -1,8 +1,7 @@
 package tech.outsource.controller.users.models;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import tech.outsource.dto.users.User;
+import tech.outsource.domain.users.User;
 
 import java.util.List;
 

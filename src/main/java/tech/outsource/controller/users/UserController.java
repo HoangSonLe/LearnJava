@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import tech.outsource.controller.users.models.UsersModelMapper;
 import tech.outsource.controller.users.models.UserRequest;
-import tech.outsource.dto.users.User;
+import tech.outsource.domain.users.User;
 import tech.outsource.service.users.UsersUseCaseService;
 
 @RestController

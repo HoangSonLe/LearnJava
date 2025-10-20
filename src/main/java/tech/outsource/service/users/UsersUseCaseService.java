@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import tech.outsource.dto.users.User;
-import tech.outsource.dto.users.UserInformation;
+import tech.outsource.domain.users.User;
+import tech.outsource.domain.users.UserInformation;
 
 @Service
 @RequiredArgsConstructor
@@ -38,5 +38,8 @@ public class UsersUseCaseService {
 
     public User findById(Integer userId) {
         return usersQueryService.findById(userId);
+    }
+    public void delete(Integer userId) {
+        usersCommandService.delete(userId);
     }
 }

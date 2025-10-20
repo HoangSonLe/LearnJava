@@ -70,6 +70,6 @@ jwt:
     897ZTU+sfCO9oFVTiAHD/lNaMANqwEpTliVSsWlEUeroiBhZ7LdWcHnJCtwAwt9e
     QwIDAQAB
     -----END PUBLIC KEY-----
-  jwtRefreshExpirationS: 60
-  jwtAccessTokenExpirationS: 30
+  jwtRefreshExpirationS: 600
+  jwtAccessTokenExpirationS: 300
   issuer: LearnJava

@@ -14,8 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RestController;
 import tech.outsource.controller.teams.models.TeamsModelMapper;
 import tech.outsource.controller.teams.models.TeamsResponse;
-import tech.outsource.dto.teams.Teams;
-import tech.outsource.dto.teams.TeamsSearchCriteria;
+import tech.outsource.domain.teams.Teams;
+import tech.outsource.domain.teams.TeamsSearchCriteria;
 import tech.outsource.service.teams.TeamsUseCaseService;
 
 @RestController

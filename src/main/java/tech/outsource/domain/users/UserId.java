@@ -1,4 +1,4 @@
-package tech.outsource.dto.users;
+package tech.outsource.domain.users;
 
 public record UserId(Integer value) {
 }

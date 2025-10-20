@@ -1,4 +1,4 @@
-package tech.outsource.dto.teams;
+package tech.outsource.domain.teams;
 
 
 public record Teams(Long teamId, String teamCode, String teamName, String description, String path, String status

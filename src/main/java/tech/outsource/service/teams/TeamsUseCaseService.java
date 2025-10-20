@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import tech.outsource.dto.teams.Teams;
-import tech.outsource.dto.teams.TeamsSearchCriteria;
+import tech.outsource.domain.teams.Teams;
+import tech.outsource.domain.teams.TeamsSearchCriteria;
 
 @Service
 @RequiredArgsConstructor

@@ -26,9 +26,14 @@ repositories {
     mavenLocal()
     mavenCentral()
 }
+ext {
+    set('springCloudVersion', "2022.0.4")
+    set('mapstructVersion', "1.5.5.Final")
+    set('coreVersion', property("CORE_VERSION"))
+}
 
 dependencies {
-    implementation 'com.example:core:1.0.0'
+    implementation "com.example:core:${coreVersion}"
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 

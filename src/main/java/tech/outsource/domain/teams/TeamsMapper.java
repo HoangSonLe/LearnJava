@@ -1,4 +1,4 @@
-package tech.outsource.dto.teams;
+package tech.outsource.domain.teams;
 
 
 import com.example.core.common.interfaces.IMapper;

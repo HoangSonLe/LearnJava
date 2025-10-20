@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.outsource.common.constants.ETeamsStatus;
 import tech.outsource.common.constants.ErrorCodes;
-import tech.outsource.dto.teams.Teams;
-import tech.outsource.dto.teams.TeamsMapper;
+import tech.outsource.domain.teams.Teams;
+import tech.outsource.domain.teams.TeamsMapper;
 import tech.outsource.repository.database.teams.TeamsEntity;
 import tech.outsource.repository.database.teams.TeamsRepository;
 

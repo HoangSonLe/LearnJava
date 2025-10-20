@@ -9,10 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.outsource.common.errors.UserErrorCodes;
-import tech.outsource.dto.users.User;
-import tech.outsource.dto.users.UserInformation;
-import tech.outsource.dto.users.UserInformationMapper;
-import tech.outsource.dto.users.UserMapper;
+import tech.outsource.domain.users.User;
+import tech.outsource.domain.users.UserInformation;
+import tech.outsource.domain.users.UserInformationMapper;
+import tech.outsource.domain.users.UserMapper;
 import tech.outsource.repository.database.users.UserEntity;
 import tech.outsource.repository.database.users.UserInformationEntity;
 import tech.outsource.repository.database.users.UserInformationRepository;
@@ -74,5 +74,9 @@ public class UsersCommandService {
         UserInformationEntity userInformationEntity = userInformationMapper.toEntity(user);
         UserInformationEntity saveEntity = userInformationRepository.save(userInformationEntity);
         return userInformationMapper.toDto(saveEntity);
+    }
+
+    public void delete(Integer userId) {
+        userRepository.findById(userId).ifPresent(userRepository::delete);
     }
 }

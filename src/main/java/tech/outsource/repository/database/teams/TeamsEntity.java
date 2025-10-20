@@ -1,11 +1,15 @@
 package tech.outsource.repository.database.teams;
 
+import com.example.core.common.annotations.SearchableField;
 import com.example.core.common.models.Auditable;
+import com.example.core.utils.SearchFieldUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,9 +31,11 @@ public class TeamsEntity extends Auditable {
     @Column(name = "team_id")
     Long teamId;
 
+    @SearchableField
     @Column(name = "team_code")
     String teamCode;
 
+    @SearchableField
     @Column(name = "team_name")
     String teamName = "";
 
@@ -42,9 +48,11 @@ public class TeamsEntity extends Auditable {
     @Column(name = "status")
     String status;
 
+    @SearchableField
     @Column(name = "sub_prison_code")
     String subPrisonCode;
 
+    @SearchableField
     @Column(name = "sub_prison_name")
     String subPrisonName;
 
@@ -53,4 +61,14 @@ public class TeamsEntity extends Auditable {
 
     @Column(name = "prison_name")
     String prisonName;
+
+    @Column(nullable = false)
+    String nonUnicodeSearchString;
+
+    @PrePersist
+    @PreUpdate
+    private void preSave() {
+        nonUnicodeSearchString = SearchFieldUtils.buildString(this);
+    }
+
 }

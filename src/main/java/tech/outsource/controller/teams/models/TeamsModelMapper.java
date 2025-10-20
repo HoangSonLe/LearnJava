@@ -2,7 +2,7 @@ package tech.outsource.controller.teams.models;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import tech.outsource.dto.teams.Teams;
+import tech.outsource.domain.teams.Teams;
 
 import java.util.List;
 

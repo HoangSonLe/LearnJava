@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import tech.outsource.controller.teams.models.TeamsModelMapper;
 import tech.outsource.controller.teams.models.TeamsRequest;
-import tech.outsource.dto.teams.Teams;
+import tech.outsource.domain.teams.Teams;
 import tech.outsource.service.teams.TeamsUseCaseService;
 
 @RestController

@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import tech.outsource.dto.teams.TeamsSearchCriteria;
+import tech.outsource.domain.teams.TeamsSearchCriteria;
 
 import java.util.Optional;
 
