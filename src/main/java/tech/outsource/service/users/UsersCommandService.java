@@ -1,5 +1,6 @@
 package tech.outsource.service.users;
 
+import com.example.core.common.exceptions.ApplicationException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -7,7 +8,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import tech.core.controller.exceptions.ApplicationException;
 import tech.outsource.common.errors.UserErrorCodes;
 import tech.outsource.dto.users.User;
 import tech.outsource.dto.users.UserInformation;

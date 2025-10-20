@@ -1,5 +1,9 @@
 package tech.outsource.controller.users;
 
+import com.example.core.common.models.ApiErrorResponse;
+import com.example.core.common.models.PageRequestCustom;
+import com.example.core.common.models.PageResponse;
+import com.example.core.common.models.SortHandleCustom;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -8,9 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RestController;
-import tech.core.common.models.ApiErrorResponse;
-import tech.core.common.models.PageImplResponse;
-import tech.core.common.models.PageRequestCustom;
 import tech.outsource.controller.users.models.UserResponse;
 import tech.outsource.controller.users.models.UsersModelMapper;
 import tech.outsource.dto.users.User;
@@ -29,10 +30,10 @@ public class UsersController implements UsersAPI {
     UsersModelMapper usersModelMapper;
 
     @Override
-    public PageImplResponse<UserResponse> findAll(String sorter, Integer currentPage, int pageSize) {
-        PageRequestCustom pageRequest = PageRequestCustom.of(currentPage, pageSize, tech.core.common.models.SortHandleCustom.of(sorter));
+    public PageResponse<UserResponse> findAll(String sorter, Integer currentPage, int pageSize) {
+        PageRequestCustom pageRequest = PageRequestCustom.of(currentPage, pageSize, SortHandleCustom.from(sorter));
         Page<User> userPage = usersUseCaseService.findAll(pageRequest);
-        return new PageImplResponse<>(
+        return new PageResponse<>(
                 usersModelMapper.toResponse(userPage.getContent()),
                 true,
                 userPage.getTotalElements(),

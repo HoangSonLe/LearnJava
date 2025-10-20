@@ -1,7 +1,7 @@
 package tech.outsource.dto.users;
 
+import com.example.core.common.interfaces.IMapper;
 import org.mapstruct.Mapper;
-import tech.core.common.models.IMapper;
 import tech.outsource.repository.database.users.UserEntity;
 
 @Mapper(componentModel = "spring")

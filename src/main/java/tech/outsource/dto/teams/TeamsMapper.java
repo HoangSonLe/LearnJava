@@ -1,8 +1,8 @@
 package tech.outsource.dto.teams;
 
 
+import com.example.core.common.interfaces.IMapper;
 import org.mapstruct.Mapper;
-import tech.core.common.models.IMapper;
 import tech.outsource.repository.database.teams.TeamsEntity;
 
 import java.util.List;

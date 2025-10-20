@@ -1,9 +1,9 @@
 package tech.outsource.common.errors;
 
+import com.example.core.common.constants.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import tech.core.common.constants.ErrorCode;
 
 @Getter
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)

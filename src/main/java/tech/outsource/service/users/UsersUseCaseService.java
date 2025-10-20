@@ -1,12 +1,12 @@
 package tech.outsource.service.users;
 
+import com.example.core.common.models.PageRequestCustom;
 import jakarta.transaction.Transactional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import tech.core.common.models.PageRequestCustom;
 import tech.outsource.dto.users.User;
 import tech.outsource.dto.users.UserInformation;
 

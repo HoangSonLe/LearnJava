@@ -1,5 +1,13 @@
 package tech.outsource.service.auth;
 
+import com.example.core.cache.IJwtCache;
+import com.example.core.common.exceptions.ApplicationException;
+import com.example.core.common.exceptions.TokenRefreshException;
+import com.example.core.encrypt.AesAlgorithm;
+import com.example.core.security.models.JwtProperties;
+import com.example.core.security.models.JwtToken;
+import com.example.core.security.services.JWTTokenService;
+import com.example.core.utils.JsonHelper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -7,21 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.security.oauth2.jwt.JwtValidationException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import tech.core.cache.IJwtCache;
-import tech.core.controller.exceptions.ApplicationException;
-import tech.core.controller.exceptions.TokenRefreshException;
-import tech.core.encrypt.AesAlgorithm;
-import tech.core.security.models.JwtProperties;
-import tech.core.security.models.JwtToken;
-import tech.core.security.service.JWTTokenService;
-import tech.core.utils.JsonHelper;
 import tech.outsource.common.errors.AuthErrorCodes;
 import tech.outsource.controller.auth.models.AuthenticationRequest;
 import tech.outsource.dto.users.User;
@@ -32,6 +30,7 @@ import tech.outsource.service.users.UsersQueryService;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -47,23 +46,28 @@ public class AuthUseCaseService {
     @NonNull
     JwtProperties jwtProperties;
 
+    @NonNull
     IJwtCache jwtCache;
 
     @NonNull
     PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @NonNull AesAlgorithm aesAlgorithm;
+
     public AuthUseCaseService(
             UsersQueryService usersQueryService,
             JWTTokenService jwtTokenService,
             JwtProperties jwtProperties,
-            @Qualifier("inMemoryJwtCache") IJwtCache jwtCache, @NonNull PasswordEncoder passwordEncoder
+            @Qualifier("inMemoryJwtCache") IJwtCache jwtCache,
+            PasswordEncoder passwordEncoder,
+            AesAlgorithm aesAlgorithm
     ) {
         this.usersQueryService = usersQueryService;
         this.jwtTokenService = jwtTokenService;
         this.jwtProperties = jwtProperties;
         this.jwtCache = jwtCache;
         this.passwordEncoder = passwordEncoder;
+        this.aesAlgorithm = aesAlgorithm;
     }
 
     public void cacheToken(JwtToken jwtToken) {
@@ -109,17 +113,17 @@ public class AuthUseCaseService {
         return false;
     }
 
-    public JwtToken createToken(UserId userId) throws Exception {
+    public JwtToken createToken(UserId userId)  {
         UserInformation userInformation = usersQueryService.findByIdToUserInformation(userId);
 
         Map<String, Object> claims = new HashMap<>();
         claims.put(User.class.getName(),
-                AesAlgorithm.encrypt(JsonHelper.toJson(userInformation))
+                aesAlgorithm.encrypt(JsonHelper.toJson(userInformation))
         );
 
         String accessToken = jwtTokenService.createAccessToken(userInformation.userId().toString(), claims);
         String refreshToken = jwtTokenService.createRefreshToken(userInformation.userId().toString(), claims);
-        String encryptUserId = AesAlgorithm.encrypt(JsonHelper.toJson(userInformation.userId()));
+        String encryptUserId = aesAlgorithm.encrypt(JsonHelper.toJson(userInformation.userId()));
 
         JwtToken jwtToken = JwtToken.builder()
                 .accessToken(accessToken)
@@ -132,10 +136,10 @@ public class AuthUseCaseService {
         return jwtToken;
     }
 
-    public JwtToken refreshToken(String refreshToken) throws Exception {
+    public JwtToken refreshToken(String refreshToken) {
         Jwt jwt = jwtTokenService.getJwt(refreshToken);
-
-        if (jwt.getExpiresAt() == null || jwt.getExpiresAt().isBefore(Instant.now())) {
+        Instant expiresAt = jwt.getExpiresAt();
+        if (Objects.isNull(expiresAt) || expiresAt.isBefore(Instant.now())) {
             throw new TokenRefreshException();
         }
 
@@ -143,7 +147,7 @@ public class AuthUseCaseService {
         return createToken(new UserId(userId));
     }
 
-    public JwtToken authenticate(AuthenticationRequest authenticationRequest) throws Exception {
+    public JwtToken authenticate(AuthenticationRequest authenticationRequest) {
         User user = usersQueryService.findByUsername(authenticationRequest.username());
 
         if (!passwordEncoder.matches(authenticationRequest.password(), user.password())) {

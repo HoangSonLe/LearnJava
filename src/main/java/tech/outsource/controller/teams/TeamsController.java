@@ -1,18 +1,17 @@
 package tech.outsource.controller.teams;
 
+import com.example.core.common.models.ApiErrorResponse;
+import com.example.core.common.models.PageRequestCustom;
+import com.example.core.common.models.PageResponse;
+import com.example.core.common.models.SortHandleCustom;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jakarta.persistence.FieldResult;
-import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RestController;
-import tech.core.common.models.ApiErrorResponse;
-import tech.core.common.models.PageImplResponse;
-import tech.core.common.models.PageRequestCustom;
 import tech.outsource.controller.teams.models.TeamsModelMapper;
 import tech.outsource.controller.teams.models.TeamsResponse;
 import tech.outsource.dto.teams.Teams;
@@ -32,11 +31,11 @@ public class TeamsController implements TeamsAPI {
     TeamsModelMapper teamsModelMapper;
 
     @Override
-    public PageImplResponse<TeamsResponse> findAll(String search, String subPrisonCode, String sorter, Integer currentPage, int pageSize) {
+    public PageResponse<TeamsResponse> findAll(String search, String subPrisonCode, String sorter, Integer currentPage, int pageSize) {
         TeamsSearchCriteria searchCriteria = TeamsSearchCriteria.of(search, subPrisonCode);
-        PageRequestCustom pageRequest = PageRequestCustom.of(currentPage, pageSize, tech.core.common.models.SortHandleCustom.of(sorter));
+        PageRequestCustom pageRequest = PageRequestCustom.of(currentPage, pageSize, SortHandleCustom.from(sorter));
         Page<Teams> teamsPage = teamsUseCaseService.findAll(searchCriteria, pageRequest);
-        return new PageImplResponse<>(
+        return new PageResponse<>(
                 teamsModelMapper.toResponse(teamsPage.getContent()),
                 true,
                 teamsPage.getTotalElements(),

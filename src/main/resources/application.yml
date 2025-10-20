@@ -79,10 +79,6 @@ jwt:
   jwtRefreshExpirationS: 60
   jwtAccessTokenExpirationS: 30
   issuer: LearnJava
-#logging:
-#  config: classpath:logback_config/logback.xml
-#  level:
-#    root: INFO
-#    org.springframework.*: INFO
-#    tech.outsource.*: DEBUG
-#    org.hibernate.orm.jdbc.bind: TRACE
+
+aes:
+  secret-key: TMySecretKey1801

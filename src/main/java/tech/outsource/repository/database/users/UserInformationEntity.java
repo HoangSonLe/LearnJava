@@ -1,12 +1,16 @@
 package tech.outsource.repository.database.users;
 
-import jakarta.persistence.*;
+import com.example.core.common.models.Auditable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
-import tech.core.common.models.Auditable;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user_information")

@@ -1,5 +1,6 @@
 package tech.outsource.repository.database.users;
 
+import com.example.core.common.models.Auditable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +13,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import tech.core.common.models.Auditable;
 
 import java.io.Serializable;
 

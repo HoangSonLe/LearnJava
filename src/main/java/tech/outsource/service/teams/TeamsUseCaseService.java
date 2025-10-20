@@ -1,11 +1,11 @@
 package tech.outsource.service.teams;
 
+import com.example.core.common.models.PageRequestCustom;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import tech.core.common.models.PageRequestCustom;
 import tech.outsource.dto.teams.Teams;
 import tech.outsource.dto.teams.TeamsSearchCriteria;
 

@@ -1,13 +1,13 @@
 package tech.outsource.service.users;
 
+import com.example.core.common.exceptions.ApplicationException;
+import com.example.core.common.models.PageRequestCustom;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import tech.core.common.models.PageRequestCustom;
-import tech.core.controller.exceptions.ApplicationException;
 import tech.outsource.common.errors.UserErrorCodes;
 import tech.outsource.dto.users.User;
 import tech.outsource.dto.users.UserId;
@@ -65,7 +65,7 @@ public class UsersQueryService {
                 .orElseThrow(() -> new ApplicationException(
                         UserErrorCodes.NOT_FOUND,
                         UserErrorCodes.NOT_FOUND.getMessage(),
-                        HttpStatus.BAD_REQUEST));;
+                        HttpStatus.BAD_REQUEST));
         return userMapper.toDto(user);
     }
 }

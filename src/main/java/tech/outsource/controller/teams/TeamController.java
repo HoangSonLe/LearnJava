@@ -1,5 +1,6 @@
 package tech.outsource.controller.teams;
 
+import com.example.core.common.models.ApiErrorResponse;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,9 +10,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import tech.core.common.models.ApiErrorResponse;
 import tech.outsource.controller.teams.models.TeamsModelMapper;
 import tech.outsource.controller.teams.models.TeamsRequest;
 import tech.outsource.dto.teams.Teams;

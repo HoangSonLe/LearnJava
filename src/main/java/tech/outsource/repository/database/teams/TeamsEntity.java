@@ -1,5 +1,6 @@
 package tech.outsource.repository.database.teams;
 
+import com.example.core.common.models.Auditable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +13,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import tech.core.common.models.Auditable;
 
 @Data  // Lombok: sinh getter, setter, toString, equals, hashCode
 @AllArgsConstructor // Lombok: sinh constructor đầy đủ tham số
