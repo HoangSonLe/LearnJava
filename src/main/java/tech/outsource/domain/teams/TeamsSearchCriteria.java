@@ -17,6 +17,13 @@ public record TeamsSearchCriteria(String search, String subPrisonCode) {
                 .subPrisonCode(subPrisonCode)
                 .build();
     }
+
+    public Specification<TeamsEntity> toSpecification() {
+        return specifications().stream()
+                .reduce(Specification::and)
+                .orElse(null);
+    }
+
     public List<Specification<TeamsEntity>> specifications() {
 
         List<Specification<TeamsEntity>> specs = new ArrayList<>();

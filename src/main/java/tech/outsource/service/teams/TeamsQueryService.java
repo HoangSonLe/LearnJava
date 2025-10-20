@@ -20,7 +20,7 @@ public class TeamsQueryService {
     TeamsMapper teamsMapper;
 
     public Page<Teams> findAll(TeamsSearchCriteria searchCriteria, PageRequestCustom pageRequestCustom) {
-        Page<TeamsEntity> teamsPage = teamsRepository.findAll(searchCriteria, pageRequestCustom.pageRequest());
+        Page<TeamsEntity> teamsPage = teamsRepository.findAll(searchCriteria.toSpecification(), pageRequestCustom.pageRequest());
         return teamsPage.map(teamsMapper::toDto);
     }
 }
