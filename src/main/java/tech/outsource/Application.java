@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 //GlobalExceptionHandler không chạy vì không nằm trong phạm vi quét của Spring.
 //Giải pháp: đưa Application lên package tech hoặc thêm scanBasePackages để quét tech.core.
-@SpringBootApplication(scanBasePackages = {"tech.outsource",  "com.example.core"})
+@SpringBootApplication(scanBasePackages = {"tech.outsource"})
 public class Application {
 
 	public static void main(String[] args) {

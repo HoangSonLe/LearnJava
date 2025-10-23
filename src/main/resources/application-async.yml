@@ -1,0 +1,35 @@
+core:
+  database:
+    mode: sync   # hoặc sync
+#  async:
+#    enable: true
+#    core-pool-size: 5
+#    max-pool-size: 10
+#    queue-capacity: 200
+#    keep-alive-seconds: 60
+#    thread-name-prefix: "learn-app-async-"
+
+domain:
+  internal:
+    database:
+      reader: localhost:5433
+      writer: localhost:5433
+spring:
+  application:
+    name: LearnJava
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: public
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+database:
+  writer:
+    url: r2dbc:postgresql://${domain.internal.database.writer}/LearnJava?&connectTimeout=10&socketTimeout=10&tcpKeepAlive=true
+    username: postgres
+    password: 123456
+  reader:
+    url: r2dbc:postgresql://${domain.internal.database.reader}/LearnJava?&connectTimeout=10&socketTimeout=10&tcpKeepAlive=true
+    username: postgres
+    password: 123456
+

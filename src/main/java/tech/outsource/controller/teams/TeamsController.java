@@ -18,6 +18,8 @@ import tech.outsource.domain.teams.Teams;
 import tech.outsource.domain.teams.TeamsSearchCriteria;
 import tech.outsource.service.teams.TeamsUseCaseService;
 
+import java.util.concurrent.CompletableFuture;
+
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
@@ -34,7 +36,11 @@ public class TeamsController implements TeamsAPI {
     public PageResponse<TeamsResponse> findAll(String search, String subPrisonCode, String sorter, Integer currentPage, int pageSize) {
         TeamsSearchCriteria searchCriteria = TeamsSearchCriteria.of(search, subPrisonCode);
         PageRequestCustom pageRequest = PageRequestCustom.of(currentPage, pageSize, SortHandleCustom.from(sorter));
-        Page<Teams> teamsPage = teamsUseCaseService.findAll(searchCriteria, pageRequest);
+        // Gọi async service
+        CompletableFuture<Page<Teams>> future = teamsUseCaseService.findAllAsync(searchCriteria, pageRequest);
+
+        // Đợi kết quả (block tại đây)
+        Page<Teams> teamsPage = future.join();
         return new PageResponse<>(
                 teamsModelMapper.toResponse(teamsPage.getContent()),
                 true,

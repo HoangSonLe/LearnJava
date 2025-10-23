@@ -5,9 +5,12 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import tech.outsource.domain.teams.Teams;
 import tech.outsource.domain.teams.TeamsSearchCriteria;
+
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor
@@ -20,8 +23,13 @@ public class TeamsUseCaseService {
     @NonNull
     TeamsQueryService teamsQueryService;
 
-    public Page<Teams> findAll(TeamsSearchCriteria searchCriteria, PageRequestCustom pageRequestCustom) {
-        return teamsQueryService.findAll(searchCriteria, pageRequestCustom);
+    public CompletableFuture<Page<Teams>> findAll(TeamsSearchCriteria searchCriteria, PageRequestCustom pageRequestCustom) {
+        return  CompletableFuture.completedFuture(teamsQueryService.findAll(searchCriteria, pageRequestCustom));
+    }
+
+    @Async("customTaskExecutor")
+    public CompletableFuture<Page<Teams>> findAllAsync(TeamsSearchCriteria searchCriteria, PageRequestCustom pageRequestCustom) {
+        return  CompletableFuture.completedFuture(teamsQueryService.findAll(searchCriteria, pageRequestCustom));
     }
 
     public void create(Teams teams) {

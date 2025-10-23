@@ -10,11 +10,13 @@ domain:
       writer: 10.0.0.27:5438
 spring:
   profiles:
-    active: local
+    active: sync
     include: actuator
   application:
     name: LearnJava
   jpa:
+    hibernate:
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -37,7 +39,7 @@ security:
     - /v1/auth/refresh-token
 
 jwt:
-  privateKey: |   
+  privateKey: |
     -----BEGIN PRIVATE KEY-----
     MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCU3i10uj6OwIEq
     LGq0MutqQgP/4sUNOdt25BWFE4lt8Fbof79qn/UWVjjbN6A5S8k3JuY8nyPRxJWh

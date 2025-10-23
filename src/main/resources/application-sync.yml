@@ -1,0 +1,22 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: public
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+domain:
+  internal:
+    database:
+      reader: localhost:5433
+      writer: localhost:5433
+database:
+  writer:
+    url: jdbc:postgresql://localhost:5433/LearnJava?&connectTimeout=10&socketTimeout=10&tcpKeepAlive=true
+    username: postgres
+    password: 123456
+  reader:
+    url: jdbc:postgresql://localhost:5433/LearnJava?&connectTimeout=10&socketTimeout=10&tcpKeepAlive=true
+    username: postgres
+    password: 123456
+
